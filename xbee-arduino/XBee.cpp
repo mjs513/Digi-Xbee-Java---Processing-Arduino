@@ -867,7 +867,8 @@ void XBee::readPacket() {
 
         b = read();
 
-        if (_pos > 0 && b == START_BYTE && ATAP == 2) {
+        //if (_pos > 0 && b == START_BYTE && ATAP == 2) {
+		if (_pos > 0 && b == START_BYTE) {
         	// new packet start before previous packeted completed -- discard previous packet and start over
         	_response.setErrorCode(UNEXPECTED_START_BYTE);
         	return;
@@ -933,7 +934,8 @@ void XBee::readPacket() {
 					// verify checksum
 
 					//std::cout << "read checksum " << static_cast<unsigned int>(b) << " at pos " << static_cast<unsigned int>(_pos) << std::endl;
-
+					//Serial.print("read checksum "); Serial.print(static_cast<unsigned int>(b));
+					//Serial.print(" at pos "); Serial.println(static_cast<unsigned int>(_pos));
 					if ((_checksumTotal & 0xff) == 0xff) {
 						_response.setChecksum(b);
 						_response.setAvailable(true);
